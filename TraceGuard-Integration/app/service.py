@@ -41,6 +41,19 @@ class TraceGuardService:
 
             logger.info("Initializing TraceGuard AI Service...")
 
+            # Enable cross-version unpickling compatibility for scikit-learn (e.g. 1.8.x artifacts on 1.9.x)
+            import sys
+            try:
+                import sklearn._loss
+                if "sklearn._loss.loss" not in sys.modules:
+                    sys.modules["sklearn._loss.loss"] = sklearn._loss
+                if "loss" not in sys.modules:
+                    sys.modules["loss"] = sklearn._loss
+                if hasattr(sklearn._loss, "_loss") and "_loss" not in sys.modules:
+                    sys.modules["_loss"] = sklearn._loss._loss
+            except Exception as e:
+                logger.debug("Sklearn compatibility bridge skipped: %s", e)
+
             # 1. Import traceguard ML components
             try:
                 from traceguard import config as ML_C
