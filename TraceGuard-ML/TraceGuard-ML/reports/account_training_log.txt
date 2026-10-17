@@ -1,0 +1,22 @@
+Accounts: 20000  fraud: 1804 (9.02%)  features: 31
+train/val/test = 12000/4000/4000
+logistic_regression [test] PR-AUC=0.793 ROC-AUC=0.887 | thr=0.782 P=0.969 R=0.704 F1=0.815 | TP=254 FP=8 FN=107 TN=3631
+hist_gradient_boosting [test] PR-AUC=0.815 ROC-AUC=0.910 | thr=0.672 P=0.963 R=0.720 F1=0.824 | TP=260 FP=10 FN=101 TN=3629
+isolation_forest [test]    PR-AUC=0.451 ROC-AUC=0.841 | thr=0.518 P=0.623 R=0.443 F1=0.518 | TP=160 FP=97 FN=201 TN=3542
+prevalence baseline        PR-AUC=0.090 (a random scorer)
+
+Best on validation PR-AUC: hist_gradient_boosting
+Top features (drop in PR-AUC when shuffled):
+ out_std                0.3807
+in_min                 0.1356
+reciprocal_partners    0.0483
+in_cnt                 0.0088
+fanout_ratio           0.0070
+total_cnt              0.0058
+in_max                 0.0040
+out_amt                0.0030
+
+Out-of-fold account metrics: oof                        PR-AUC=0.805 ROC-AUC=0.910 | thr=0.672 P=0.947 R=0.717 F1=0.816 | TP=1293 FP=73 FN=511 TN=18123
+Suspicious networks found: 52 {'cycle': 52} | accounts in networks: 1352 | fraction truly fraud (purity): 0.948 | share of all fraud accounts covered: 0.711
+
+Saved models/account_model.joblib, reports/account_model_metrics.json, reports/suspicious_networks.json, reports/account_scores_oof.csv

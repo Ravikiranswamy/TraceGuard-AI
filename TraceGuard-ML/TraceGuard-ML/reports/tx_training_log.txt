@@ -1,0 +1,27 @@
+train rows= 90349  positives= 5240 (5.80%)
+val   rows= 19019  positives= 1552 (8.16%)
+test  rows= 11190  positives= 1093 (9.77%)
+logistic_regression (all) [test] PR-AUC=0.873 ROC-AUC=0.957 | thr=0.995 P=0.939 R=0.703 F1=0.804 | TP=768 FP=50 FN=325 TN=10047
+hist_gradient_boosting (all) [test] PR-AUC=0.886 ROC-AUC=0.959 | thr=0.879 P=0.932 R=0.739 F1=0.824 | TP=808 FP=59 FN=285 TN=10038
+ablation: amount features only [test] PR-AUC=0.817 ROC-AUC=0.911 | thr=0.867 P=0.904 R=0.679 F1=0.775 | TP=742 FP=79 FN=351 TN=10018
+ablation: history features only [test] PR-AUC=0.735 ROC-AUC=0.900 | thr=0.774 P=0.704 R=0.613 F1=0.655 | TP=670 FP=282 FN=423 TN=9815
+isolation_forest [test]    PR-AUC=0.331 ROC-AUC=0.854 | thr=0.481 P=0.378 R=0.809 F1=0.515 | TP=884 FP=1456 FN=209 TN=8641
+prevalence baseline        PR-AUC=0.098 (a random scorer)
+
+Tier thresholds from validation: HIGH=0.879  MEDIUM=0.605
+HIGH (score >= thr_high)   PR-AUC=0.886 ROC-AUC=0.959 | thr=0.879 P=0.932 R=0.739 F1=0.824 | TP=808 FP=59 FN=285 TN=10038 | flagged 7.7% of tx
+MEDIUM+ (score >= thr_medium) PR-AUC=0.886 ROC-AUC=0.959 | thr=0.605 P=0.521 R=0.882 F1=0.655 | TP=964 FP=885 FN=129 TN=9212 | flagged 16.5% of tx
+
+Top features (drop in PR-AUC when shuffled):
+ amount                   0.3684
+r_in_cnt                 0.0665
+reverse_pair_cnt         0.0299
+amt_vs_sender_avg_out    0.0286
+s_in_cnt                 0.0279
+r_in_uniq                0.0253
+r_out_cnt                0.0230
+r_out_cnt_w              0.0113
+amt_to_sender_balance    0.0101
+s_out_cnt_w              0.0086
+
+Saved models/tx_model.joblib, reports/tx_model_metrics.json, reports/tx_test_scored.csv, reports/tx_pr_curve.png
