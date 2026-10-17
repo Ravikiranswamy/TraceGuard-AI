@@ -1,36 +1,6 @@
-# Security & Private Keys (STRICT: DO NOT COMMIT)
-*.pem
-*.key
-tracguardkey*.pem
+node_modules/
+dist/
 .env
-.env.*
-
-# Virtual Environments
-.venv/
-venv/
-env/
-*/.venv/
-*/*/.venv/
-
-# Python cache & compiled files
-__pycache__/
-*/__pycache__/
-*/*/__pycache__/
-*.py[cod]
-*$py.class
-.pytest_cache/
-*/.pytest_cache/
-.coverage
-htmlcov/
-.ipynb_checkpoints/
-
-# macOS & OS artifacts
-__MACOSX/
+.env.local
+.env.*.local
 .DS_Store
-Thumbs.db
-
-# Datasets (TraceGuard-ML raw/processed data)
-TraceGuard-ML/TraceGuard-ML/data/raw/*
-TraceGuard-ML/TraceGuard-ML/data/processed/*
-!TraceGuard-ML/TraceGuard-ML/data/raw/.gitkeep
-!TraceGuard-ML/TraceGuard-ML/data/processed/.gitkeep

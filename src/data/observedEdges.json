@@ -1,0 +1,132 @@
+{
+  "hub": 19998,
+  "edges": [
+    {
+      "source": 19998,
+      "target": 7413,
+      "count": 3,
+      "total": 53.04,
+      "risk": 0.997
+    },
+    {
+      "source": 5136,
+      "target": 19998,
+      "count": 2,
+      "total": 5.2,
+      "risk": 0.9985
+    },
+    {
+      "source": 14565,
+      "target": 19998,
+      "count": 1,
+      "total": 391.22,
+      "risk": 0.4423
+    },
+    {
+      "source": 17498,
+      "target": 19998,
+      "count": 1,
+      "total": 101.01,
+      "risk": 0.6175
+    },
+    {
+      "source": 19998,
+      "target": 1352,
+      "count": 1,
+      "total": 261.79,
+      "risk": 0.4666
+    },
+    {
+      "source": 19998,
+      "target": 3402,
+      "count": 1,
+      "total": 261.79,
+      "risk": 0.4434
+    },
+    {
+      "source": 9185,
+      "target": 19998,
+      "count": 1,
+      "total": 534.41,
+      "risk": 0.7786
+    },
+    {
+      "source": 14134,
+      "target": 19998,
+      "count": 1,
+      "total": 132.27,
+      "risk": 0.5516
+    },
+    {
+      "source": 16542,
+      "target": 19998,
+      "count": 1,
+      "total": 202.66,
+      "risk": 0.6638
+    },
+    {
+      "source": 19998,
+      "target": 9547,
+      "count": 1,
+      "total": 261.79,
+      "risk": 0.9136
+    },
+    {
+      "source": 19998,
+      "target": 18253,
+      "count": 1,
+      "total": 261.79,
+      "risk": 0.5315
+    },
+    {
+      "source": 14039,
+      "target": 19998,
+      "count": 1,
+      "total": 140.27,
+      "risk": 0.5701
+    },
+    {
+      "source": 14102,
+      "target": 19998,
+      "count": 1,
+      "total": 105.37,
+      "risk": 0.2647
+    },
+    {
+      "source": 16527,
+      "target": 19998,
+      "count": 1,
+      "total": 250.64,
+      "risk": 0.7638
+    },
+    {
+      "source": 19998,
+      "target": 4941,
+      "count": 1,
+      "total": 261.79,
+      "risk": 0.548
+    },
+    {
+      "source": 19998,
+      "target": 12113,
+      "count": 1,
+      "total": 261.79,
+      "risk": 0.494
+    },
+    {
+      "source": 9378,
+      "target": 19998,
+      "count": 1,
+      "total": 138.3,
+      "risk": 0.5156
+    },
+    {
+      "source": 15316,
+      "target": 19998,
+      "count": 1,
+      "total": 187.58,
+      "risk": 0.6915
+    }
+  ],
+  "note": "Observed edges from held-out test scored transaction report; graph is partial, not the complete network."
+}
