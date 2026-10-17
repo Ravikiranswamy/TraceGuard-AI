@@ -19,14 +19,20 @@ TraceGuard-AI/
 │       ├── reports/          # Evaluation metrics & suspicious networks
 │       ├── scripts/          # Training & data inspection pipeline
 │       └── tests/            # ML feature correctness tests
-└── TraceGuard-Integration/   # Production-ready integrated backend
-    ├── app/
-    │   ├── main.py           # FastAPI endpoints (/score, /record, /networks)
-    │   ├── service.py        # Model lifecycle and HistoryStore management
-    │   ├── schemas.py        # Pydantic v2 schemas conforming to ML contract
-    │   └── config.py         # Portable paths for Windows and IBM LinuxONE
-    ├── tests/                # Comprehensive end-to-end integration tests
-    └── requirements.txt      # Production dependencies
+├── TraceGuard-Integration/   # Production-ready integrated backend
+│   ├── app/
+│   │   ├── main.py           # FastAPI endpoints (/score, /record, /networks)
+│   │   ├── service.py        # Model lifecycle and HistoryStore management
+│   │   ├── schemas.py        # Pydantic v2 schemas conforming to ML contract
+│   │   └── config.py         # Portable paths for Windows and IBM LinuxONE
+│   ├── tests/                # Comprehensive end-to-end integration tests
+│   └── requirements.txt      # Production dependencies
+└── TraceGuard-Frontend/      # React 18 + Vite investigation dashboard
+    ├── src/
+    │   ├── pages/            # Dashboard, RiskCheck, Networks, Alerts, History
+    │   ├── services/api.js   # API client for FastAPI backend
+    │   └── context/          # Demo / Live API workspace state
+    └── package.json
 ```
 
 ---
@@ -44,11 +50,19 @@ python -m pip install -r requirements.txt
 python -m pytest -v
 ```
 
-### 3. Launch API Server
+### 3. Launch Backend API Server
 ```bash
 python -m uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 ```
 Interactive API docs: `http://localhost:8000/docs`.
+
+### 4. Launch Frontend Dashboard
+```bash
+cd ../TraceGuard-Frontend
+npm install
+npm run dev
+```
+Dashboard available at: `http://localhost:5173`.
 
 ---
 
