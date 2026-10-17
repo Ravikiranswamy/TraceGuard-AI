@@ -141,19 +141,61 @@ def get_network(network_id: str):
     return net
 
 
-@app.get("/networks/ego/{account_id}", response_model=EgoNetworkResponse, tags=["Networks"])
-@app.get("/accounts/{account_id}/ego", response_model=EgoNetworkResponse, tags=["Networks"])
-def get_ego_network(
-    account_id: int,
-    hops: int = Query(2, ge=1, le=4, description="Number of hops for neighbor reach"),
-    max_nodes: int = Query(60, ge=5, le=200, description="Max nodes to display in graph"),
-):
-    """
-    Get the ego-network graph around an account for interactive graph visualization.
-    """
+# Also mount identical endpoints under /api for full frontend compatibility
+@app.get("/api/health", response_model=HealthResponse, tags=["System"], include_in_schema=False)
+def api_health():
+    return service.get_health()
+
+@app.post("/api/score", response_model=ScoreResponse, tags=["Scoring"], include_in_schema=False)
+def api_score(req: ScoreRequest):
+    return service.score(req)
+
+@app.post("/api/score/batch", response_model=BatchScoreResponse, tags=["Scoring"], include_in_schema=False)
+def api_score_batch(req: BatchScoreRequest):
+    return service.score_batch(req)
+
+@app.post("/api/record", status_code=status.HTTP_204_NO_CONTENT, tags=["History"], include_in_schema=False)
+def api_record(req: ScoreRequest):
+    service.record(req)
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
+
+@app.get("/api/networks", response_model=list[NetworkSummary], tags=["Networks"], include_in_schema=False)
+def api_get_networks(limit: int = Query(20, ge=1, le=1000)):
+    return service.get_networks(limit=limit)
+
+@app.get("/api/networks/{network_id}", response_model=NetworkSummary, tags=["Networks"], include_in_schema=False)
+def api_get_network(network_id: str):
+    net = service.get_network_by_id(network_id)
+    if not net:
+        raise HTTPException(status_code=404, detail=f"Network '{network_id}' not found.")
+    return net
+
+@app.get("/api/networks/ego/{account_id}", response_model=EgoNetworkResponse, tags=["Networks"], include_in_schema=False)
+def api_get_ego_network(account_id: int, hops: int = Query(2, ge=1, le=4), max_nodes: int = Query(60, ge=5, le=200)):
     ego = service.get_ego_network(account_id=account_id, hops=hops, max_nodes=max_nodes)
     if not ego:
-        raise HTTPException(
-            status_code=404, detail=f"Ego-network unavailable for account {account_id} or history not loaded."
-        )
+        raise HTTPException(status_code=404, detail=f"Ego-network unavailable for account {account_id}.")
     return ego
+
+
+# ---- Static Frontend Serving (Single-Port Self-Contained Deployment) ---------
+from pathlib import Path
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
+
+STATIC_DIR = Path(__file__).parent.parent / "static"
+if not STATIC_DIR.exists():
+    STATIC_DIR = Path(__file__).parent.parent.parent / "TraceGuard-Frontend" / "dist"
+
+if STATIC_DIR.exists() and (STATIC_DIR / "index.html").exists():
+    logger.info("Serving frontend static assets from %s", STATIC_DIR)
+    if (STATIC_DIR / "assets").exists():
+        app.mount("/assets", StaticFiles(directory=str(STATIC_DIR / "assets")), name="assets")
+
+    @app.get("/{full_path:path}", include_in_schema=False)
+    async def serve_spa(full_path: str = ""):
+        target = STATIC_DIR / full_path
+        if full_path and target.is_file():
+            return FileResponse(target)
+        return FileResponse(STATIC_DIR / "index.html")
+

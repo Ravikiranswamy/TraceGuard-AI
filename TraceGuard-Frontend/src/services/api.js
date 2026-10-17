@@ -5,7 +5,7 @@
  */
 const API_ROOT = import.meta.env.DEV
   ? '/api'
-  : (import.meta.env.VITE_API_BASE_URL || '/api').replace(/\/$/, '');
+  : (import.meta.env.VITE_API_BASE_URL || '').replace(/\/$/, '');
 
 export class ApiError extends Error {
   constructor(message, status = 0) { super(message); this.name = 'ApiError'; this.status = status; }
